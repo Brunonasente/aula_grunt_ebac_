@@ -55,6 +55,10 @@ module.exports = function(grunt) {
                         {
                             match:'ENDERECO_DO_CSS',
                             replacement: './styles/main.min.css'  //Aonde esta claro que este arquivo vai ser pego na pastra src? porque ele é o ambiente de dev?
+                        },
+                        {
+                            match:'ENDERECO_DO_JS',
+                            replacement: './scripts/main.min.js'  //Aonde esta claro que este arquivo vai ser pego na pastra src? porque ele é o ambiente de dev?
                         }
                     ]
                 },
@@ -79,7 +83,14 @@ module.exports = function(grunt) {
                 }
             }
         },
-        clean: ['prebuild']       
+        clean: ['prebuild'],
+        uglify: {
+            target: {
+                files:{
+                    'dist/scripts/main.min.js' : 'src/scripts/main.js'
+                }
+            }
+        }      
     })
     
 
@@ -89,10 +100,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-replace');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-uglify');  
     
 
     grunt.registerTask('default',['watch']); // tarefa, a ser executada por npm run grunt
-    grunt.registerTask('build',['less:production', 'htmlmin:dist', 'replace:dist', 'clean']);
+    grunt.registerTask('build',['less:production', 'htmlmin:dist', 'replace:dist', 'clean', 'uglify']);
 
     
 
